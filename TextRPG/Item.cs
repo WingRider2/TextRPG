@@ -8,19 +8,26 @@ namespace TextRPG
 {
     internal class Item
     {
-        protected string Name { get; set; }
-        protected string ItemEquipment { get; set; }
-        public bool IsEquipped { get; set; }
-        public int price { get; set; }
+        protected string name;
+        public string Name { get { return name; } set { name = value; } }
+        protected string itemEquipment;
+        public string ItemEquipment{ get { return itemEquipment; } set { itemEquipment = value; } }
 
-        public int point { get; set; }
-        public itemType type { get; set; }
+        protected bool isEquipped;
+        public bool IsEquipped { get { return isEquipped; } set { isEquipped = value; } }
+        protected int price;
+        public int Price { get { return price; } set { price = value; } }
+        protected int point { get; set; }
+        public int Point { get { return point; } set { point = value; } }
+        protected itemType type;
+        public itemType Type { get { return type; } set { type = value; } }
+        
         public Item(string name, string itemEquipment)
         {
             this.Name = name;
             this.ItemEquipment = itemEquipment;
             this.price = -1;
-            IsEquipped = false;            
+            isEquipped = false;            
         }
         public Item(string name, string itemEquipment, int price)
         {

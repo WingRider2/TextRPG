@@ -30,10 +30,15 @@ namespace TextRPG
         private int gold;
         public int Gold { get { return level; } set { level = value; } }
 
-        public List<Item> items = new List<Item>();
+        private List<Item> items = new List<Item>();
 
-        public int addDamages;
-        public int addDefense;
+        private int addDamages;
+        private int addDefense;
+        //### 장착 개선 (난이도 - ★★☆☆☆)
+
+        //- 각 타입별로 하나의 아이템만 장착가능 - (방어구 / 무기 )
+        //- 방어구를 장착하면 기존 방어구가 있다면 해제하고 장착
+        //- 무기를 장착하면 기존 무기가 있다면 해제하고 장착
         public Character()
         {
             level = 0;
@@ -105,14 +110,14 @@ namespace TextRPG
             if (!item.IsEquipped)
             {
                 item.unEquipped();
-                if (item.type == itemType.Armor) addDefense += item.point;
-                if (item.type == itemType.Weapon) addDamages += item.point;
+                if (item.Type == itemType.Armor) addDefense += item.Point;
+                if (item.Type == itemType.Weapon) addDamages += item.Point;
             }
             else
             {
                 item.equipped();
-                if (item.type == itemType.Armor) addDefense -= item.point;
-                if (item.type == itemType.Weapon) addDamages -= item.point;
+                if (item.Type == itemType.Armor) addDefense -= item.Point;
+                if (item.Type == itemType.Weapon) addDamages -= item.Point;
             }
         }
         public void onOffTheItem(int num)
@@ -123,14 +128,14 @@ namespace TextRPG
             if (!items[tempmun].IsEquipped)
             {
                 items[tempmun].unEquipped();
-                if (items[tempmun].type == itemType.Armor) addDefense += items[tempmun].point;
-                if (items[tempmun].type == itemType.Weapon) addDamages += items[tempmun].point;
+                if (items[tempmun].Type == itemType.Armor) addDefense += items[tempmun].Point;
+                if (items[tempmun].Type == itemType.Weapon) addDamages += items[tempmun].Point;
             }
             else
             {
                 items[tempmun].equipped();
-                if (items[tempmun].type == itemType.Armor) addDefense -= items[tempmun].point;
-                if (items[tempmun].type == itemType.Weapon) addDamages -= items[tempmun].point;
+                if (items[tempmun].Type == itemType.Armor) addDefense -= items[tempmun].Point;
+                if (items[tempmun].Type == itemType.Weapon) addDamages -= items[tempmun].Point;
             }
         }
     }

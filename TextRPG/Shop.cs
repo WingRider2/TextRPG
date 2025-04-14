@@ -24,8 +24,8 @@ namespace TextRPG
             foreach (var item in shopItems)
             {
                 item.Show();
-                if (item.price != -1) Console.WriteLine($"{item.price} G");
-                if (item.price == -1) Console.WriteLine("구매완료");
+                if (item.Price != -1) Console.WriteLine($"{item.Price} G");
+                if (item.Price == -1) Console.WriteLine("구매완료");
             }
         }
         public void showItems(int num)
@@ -34,8 +34,8 @@ namespace TextRPG
             {
                 num++;
                 item.ShowCount(num);
-                if (item.price != -1) Console.WriteLine($"{item.price} G");
-                if (item.price == -1) Console.WriteLine("구매완료");
+                if (item.Price != -1) Console.WriteLine($"{item.Price} G");
+                if (item.Price == -1) Console.WriteLine("구매완료");
             }
         }
     }

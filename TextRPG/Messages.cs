@@ -78,6 +78,7 @@ namespace TextRPG
                 """
                 );
             shop.showItems();
+
             Console.Write(
                 """
                     
