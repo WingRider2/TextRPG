@@ -10,26 +10,16 @@ namespace TextRPG
 {
     internal class Armor : Item
     {
+        public Armor(string name, int defense, string itemEquipment, int? price) : base(name, itemEquipment, price)
+        {
+            this.point = defense;
+            this.type = itemType.Armor;
+        }
+        public override void Show(int? num)
+        {
+            base.Show(num);
+            Console.Write($"{Name} | 방어력 +{point} | {ItemEquipment} |");
+        }
 
-        public Armor(string name, int defense, string itemEquipment) : base(name, itemEquipment)
-        {
-            this.point = defense;
-            this.type = itemType.Armor;
-        }
-        public Armor(string name, int defense, string itemEquipment, int price) : base(name, itemEquipment, price)
-        {
-            this.point = defense;
-            this.type = itemType.Armor;
-        }
-        public override void Show()
-        {
-            base.Show();
-            Console.Write($"{Name} | 방어력 +{point} | {ItemEquipment} |");
-        }
-        public override void ShowCount(int num)
-        {            
-            base.ShowCount(num);
-            Console.Write($"{Name} | 방어력 +{point} | {ItemEquipment} |");
-        }
     }
 }

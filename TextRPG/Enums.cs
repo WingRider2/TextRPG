@@ -14,7 +14,9 @@ namespace TextRPG
         Inventory,
         InventoryEquipItems,
         Shop,
-        ShopBuyWindow
+        ShopBuyWindow,
+        ShopSellWindow,
+        BreakTime
     }
     enum itemType
     {

@@ -15,21 +15,14 @@ namespace TextRPG
 
         protected bool isEquipped;
         public bool IsEquipped { get { return isEquipped; } set { isEquipped = value; } }
-        protected int price;
-        public int Price { get { return price; } set { price = value; } }
+        protected int? price;
+        public int? Price { get { return price; } set { price = value; } }
         protected int point { get; set; }
         public int Point { get { return point; } set { point = value; } }
         protected itemType type;
         public itemType Type { get { return type; } set { type = value; } }
         
-        public Item(string name, string itemEquipment)
-        {
-            this.Name = name;
-            this.ItemEquipment = itemEquipment;
-            this.price = -1;
-            isEquipped = false;            
-        }
-        public Item(string name, string itemEquipment, int price)
+        public Item(string name, string itemEquipment, int? price)
         {
             this.Name = name;
             this.ItemEquipment = itemEquipment;
@@ -37,21 +30,18 @@ namespace TextRPG
             IsEquipped = false;
         }
 
-        public virtual void Show()
+        public virtual void Show(int? num)
         {
-            Console.Write(" - ");
+            if (num.HasValue) Console.Write($" - {num} ");
+            else Console.Write(" - ");
+
             if (IsEquipped) Console.Write("[E]");
         }
-        public virtual void ShowCount(int num)
-        {            
-            Console.Write($" - {num} ");
-            if (IsEquipped) Console.Write("[E]");
-        }
-        public virtual void equipped()
+        public virtual void Equipped()
         {
             IsEquipped = true;
         }
-        public virtual void unEquipped()
+        public virtual void UnEquipped()
         {
             IsEquipped = false;
         }

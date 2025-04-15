@@ -6,36 +6,51 @@ using System.Threading.Tasks;
 
 namespace TextRPG
 {
-    internal class Shop
+    internal class Shop : IShowItem
     {
         List<Item> shopItems;
-        public Shop() {
+        public Shop()
+        {
             shopItems = new List<Item>();
         }
-        public void Add(Item item) { 
+        public void Add(Item item)
+        {
             shopItems.Add(item);
         }
         public int Length()
         {
             return shopItems.Count;
         }
-        public void showItems()
+        public void SellItem(Character character, int num)
         {
-            foreach (var item in shopItems)
+            int itemNum = num - 1;
+            if (character.Gold < shopItems[itemNum].Price)
             {
-                item.Show();
-                if (item.Price != -1) Console.WriteLine($"{item.Price} G");
-                if (item.Price == -1) Console.WriteLine("구매완료");
+                Messages.Instance().NotEnoughGold();
             }
+            else
+            {
+                character.BuyItem(shopItems[itemNum]);
+                shopItems[itemNum].Price = null;
+            }
+
         }
-        public void showItems(int num)
+        public void BuyItem(Character character, int num)
+        {
+            int itemNum = num - 1;
+            shopItems.Find(n => n.Name == character.Items[itemNum].Name).Price = character.Items[itemNum].Price;
+            character.SelItem(itemNum);
+            
+
+        }
+        public void ShowItems(int? num)
         {
             foreach (var item in shopItems)
             {
-                num++;
-                item.ShowCount(num);
-                if (item.Price != -1) Console.WriteLine($"{item.Price} G");
-                if (item.Price == -1) Console.WriteLine("구매완료");
+                if (num.HasValue) num++;
+                item.Show(null);
+                if (item.Price.HasValue) Console.WriteLine($"{item.Price} G");
+                else Console.WriteLine("구매완료");
             }
         }
     }
