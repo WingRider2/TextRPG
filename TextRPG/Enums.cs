@@ -16,6 +16,8 @@ namespace TextRPG
         Shop,
         ShopBuyWindow,
         ShopSellWindow,
+        DungeonSelection,
+        DungeonEnd,
         BreakTime
     }
     enum itemType
@@ -23,5 +25,12 @@ namespace TextRPG
         None,
         Armor,
         Weapon
+    }
+    enum DunjeonType
+    {
+        None,
+        Easy,
+        Normal,
+        Hard
     }
 }

@@ -1,14 +1,16 @@
-﻿namespace TextRPG
+﻿using System.Numerics;
+
+namespace TextRPG
 {
     internal class Program
     {
         static void Main(string[] args)
         {
-            Character kim = new Character(1, "kim", "전사", 10, 5, 100, 1500);
+            Player kim = new Player(1, "kim", "전사", 10, 5, 100, 1500);
 
             Armor armor1 = new Armor("무쇠갑옷", 5, "무쇠로 만들어져 튼튼한 갑옷입니다.", 1800);
             Weapon weapon1 = new Weapon("스파르타의 창", 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 2700);
-            Weapon weapon2 = new Weapon("낡은 검", 2, "쉽게 볼 수 있는 낡은 검 입니다.", 600 );
+            Weapon weapon2 = new Weapon("낡은 검", 2, "쉽게 볼 수 있는 낡은 검 입니다.", 600);
 
             kim.AddItem(armor1);
             kim.AddItem(weapon1);
@@ -26,9 +28,15 @@
             shop.Add(new Weapon("스파르타의 창 ", 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.  ", null));
             shop.Add(new Weapon("김광민 방방이 ", 20, "스파르타의 전사중 가장 강한 전사의 형태를 한 몽둥이입니다.  ", 10000));
 
+            Dungeon[] Dungeons = {new Dungeon(DunjeonType.Easy,5,1000 ),
+                             new Dungeon(DunjeonType.Normal,11,1700 ),
+                             new Dungeon(DunjeonType.Hard,17,2500  )
+            };
+
             Stage state = Stage.Start;
             int input;
             bool isneedErrorMessages = true;
+            int DunjeonLevel = -1;
             while (true)
             {
                 try
@@ -47,6 +55,7 @@
                             if (input == 1) state = Stage.Staters;
                             else if (input == 2) state = Stage.Inventory;
                             else if (input == 3) state = Stage.Shop;
+                            else if (input == 4) state = Stage.DungeonSelection;
                             else if (input == 5) state = Stage.BreakTime;
                             else
                             {
@@ -134,6 +143,37 @@
                                 isneedErrorMessages = false;
                             }
                             break;
+                        case Stage.DungeonSelection:
+                            Messages.Instance().DungeonSelection(Dungeons);
+                            input = int.Parse(Console.ReadLine());
+
+                            if (input == 0)
+                            {
+                                state = Stage.Start;
+                            }
+                            else if (input > 0 && input <= Dungeons.Length)
+                            {
+                                DunjeonLevel = input;
+                                state = Stage.DungeonEnd;                                
+                            }
+                            else
+                            {
+                                isneedErrorMessages = false;
+                            }
+                            break;
+                        case Stage.DungeonEnd:            
+                            Messages.Instance().DungeonEnd(Dungeons[DunjeonLevel], kim);
+                            input = int.Parse(Console.ReadLine());
+
+                            if (input == 0)
+                            {
+                                state = Stage.Start;
+                            }
+                            else
+                            {
+                                isneedErrorMessages = false;
+                            }
+                            break;
                         case Stage.BreakTime:
                             Messages.Instance().BreakTimeMessages(kim);
                             input = int.Parse(Console.ReadLine());
@@ -152,10 +192,6 @@
                             }
                             break;
 
-                      
-                        //### 레벨업 기능 추가 (난이도 - ★★☆☆☆)
-
-                        //던전입장 기능 추가
 
                         //게임 저장하기 추가
 

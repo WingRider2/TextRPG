@@ -21,26 +21,25 @@ namespace TextRPG
         {
             return shopItems.Count;
         }
-        public void SellItem(Character character, int num)
+        public void SellItem(Player player, int num)
         {
             int itemNum = num - 1;
-            if (character.Gold < shopItems[itemNum].Price)
+            if (player.Gold < shopItems[itemNum].Price)
             {
                 Messages.Instance().NotEnoughGold();
             }
             else
             {
-                character.BuyItem(shopItems[itemNum]);
+                player.BuyItem(shopItems[itemNum]);
                 shopItems[itemNum].Price = null;
             }
 
         }
-        public void BuyItem(Character character, int num)
+        public void BuyItem(Player player, int num)
         {
             int itemNum = num - 1;
-            shopItems.Find(n => n.Name == character.Items[itemNum].Name).Price = character.Items[itemNum].Price;
-            character.SelItem(itemNum);
-            
+            shopItems.Find(n => n.Name == player.Items[itemNum].Name).Price = player.Items[itemNum].Price;
+            player.SelItem(itemNum);           
 
         }
         public void ShowItems(int? num)

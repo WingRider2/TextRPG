@@ -34,9 +34,9 @@ namespace TextRPG
                 >>
                 """);
         }
-        public void StatersMessages(Character character)
+        public void StatersMessages(Player player)
         {
-            character.ShowStaters();
+            player.ShowStaters();
             Console.Write(
                 """              
                 0. 나가기    
@@ -45,10 +45,10 @@ namespace TextRPG
                 >>
                 """);
         }
-        public void InventoryMessages(Character character)
+        public void InventoryMessages(Player player)
         {
             Console.WriteLine("[아이템 목록]");
-            character.ShowItems(null);
+            player.ShowItems(null);
             Console.Write(
                 """    
                 
@@ -59,7 +59,7 @@ namespace TextRPG
                 >>
                 """);
         }
-        public void InventoryEquipItemsMessages(Character character)
+        public void InventoryEquipItemsMessages(Player player)
         {
             Console.WriteLine("""       
                 인벤토리 - 장착 관리
@@ -69,8 +69,8 @@ namespace TextRPG
                 [아이템 목록]
                 """
                 );
-                
-            character.ShowItems(0);
+
+            player.ShowItems(0);
             Console.Write(
                 """
 
@@ -80,12 +80,12 @@ namespace TextRPG
                 >>
                 """);
         }
-        public void ShopMessages(Character character, Shop shop , bool isBuyWindow,bool isSellWindow)
+        public void ShopMessages(Player player, Shop shop, bool isBuyWindow, bool isSellWindow)
         {
             Console.WriteLine(
                 $"""      
                 [보유 골드]
-                {character.Gold} G
+                {player.Gold} G
 
                 [아이템 목록]
 
@@ -97,7 +97,7 @@ namespace TextRPG
             }
             if (isSellWindow)
             {
-                character.ShowItems(0);
+                player.ShowItems(0);
             }
             else
             {
@@ -118,7 +118,74 @@ namespace TextRPG
                 >>
                 """);
         }
-        public void BreakTimeMessages(Character character)
+        public void DungeonSelection(Dungeon[] dungeons)
+        {
+            Console.WriteLine(
+                """                    
+                이곳에서 던전으로 들어가기전 활동을 할 수 있습니다.
+
+                """);
+            for (int i = 0; i < dungeons.Length; i++)
+            {
+                dungeons[i].show(i + 1);
+            }
+            Console.Write(
+                """                    
+                0. 나가기
+
+                원하시는 행동을 입력해주세요.   
+                >>
+                """);
+        }
+        public void DungeonEnd(Dungeon dungeon, Player player)
+        {
+            string dunjeonLever = null;
+            if (dungeon.Type == DunjeonType.Easy) dunjeonLever = "쉬운 던전";
+            if (dungeon.Type == DunjeonType.Normal) dunjeonLever = "노말 던전";
+            if (dungeon.Type == DunjeonType.Hard) dunjeonLever = "하드 던전";
+
+            int beforLife = player.Life;
+            int beforGold = player.Gold;
+
+            if (dungeon.ComeInPlayer(player))
+            {
+                Console.Write(
+                    $"""                    
+                던전 클리어
+                축하합니다!!
+                {dunjeonLever}을 클리어 하였습니다.
+
+                [탐험 결과]
+                체력 {beforLife} -> {player.Life}
+                Gold {beforGold} G -> {player.Gold} G 
+
+                0. 나가기
+
+                원하시는 행동을 입력해주세요.
+                >>
+                >>
+                """);
+            }
+            else
+            {
+                Console.Write(
+                $"""                    
+                던전 실패
+                {dunjeonLever}을 실패 하였습니다.
+
+                [탐험 결과]
+                체력 {beforLife} -> {player.Life}
+                Gold {beforGold} G -> {player.Gold} G 
+
+                0. 나가기
+
+                원하시는 행동을 입력해주세요.
+                >>
+                >>
+                """);
+            }
+        }
+        public void BreakTimeMessages(Player character)
         {
             Console.WriteLine(
                 $"""
