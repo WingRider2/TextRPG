@@ -19,6 +19,7 @@ namespace TextRPG
         public int? Price { get { return price; } set { price = value; } }
         protected int point { get; set; }
         public int Point { get { return point; } set { point = value; } }
+
         protected itemType type;
         public itemType Type { get { return type; } set { type = value; } }
         

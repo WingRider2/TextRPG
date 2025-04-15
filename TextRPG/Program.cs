@@ -57,6 +57,7 @@ namespace TextRPG
                             else if (input == 3) state = Stage.Shop;
                             else if (input == 4) state = Stage.DungeonSelection;
                             else if (input == 5) state = Stage.BreakTime;
+                            else if (input == 6) state = Stage.GameOver;
                             else
                             {
                                 isneedErrorMessages = false;
@@ -191,19 +192,14 @@ namespace TextRPG
                                 isneedErrorMessages = false;
                             }
                             break;
-
-
-                        //게임 저장하기 추가
-
+                        case Stage.GameOver:
+                            //게임 종료해도 플레이및 상인 터이터 저장
+                            return;
                         default: break;
                     }
                 }
                 catch (FormatException) { isneedErrorMessages = false; }
-
             }
-
         }
     }
-
-
 }

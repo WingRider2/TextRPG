@@ -18,7 +18,8 @@ namespace TextRPG
         ShopSellWindow,
         DungeonSelection,
         DungeonEnd,
-        BreakTime
+        BreakTime,
+        GameOver
     }
     enum itemType
     {
