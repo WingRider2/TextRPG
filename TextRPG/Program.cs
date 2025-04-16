@@ -1,32 +1,63 @@
-﻿using System.Numerics;
+﻿using System;
+using System.IO;
+using System.Text.Json;
 
 namespace TextRPG
 {
     internal class Program
     {
+        private static string xmlFileName = @"D:\SPClub\TextRPG\data.txt";
+
+        public static void WriteFile(Player player)
+        {
+            string jsonString = JsonSerializer.Serialize(player);
+            File.WriteAllText(xmlFileName, jsonString);
+        }
+        public static Player ReadFile()
+        {
+            Player player;
+            try
+            {
+                string readJson = File.ReadAllText(xmlFileName);
+                player = JsonSerializer.Deserialize<Player>(readJson);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
+            return player;
+        }
         static void Main(string[] args)
         {
+            Shop shop = new Shop();
+            Armor armor1 = new Armor("수련자 갑옷    ", 5, "수련에 도움을 주는 갑옷입니다.                   ", 1000);
+            Armor armor2 = new Armor("무쇠갑옷       ", 9, "무쇠로 만들어져 튼튼한 갑옷입니다.               ", 1800);
+            Armor armor3 = new Armor("스파르타의 갑옷", 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500);
+            Armor armor4 = new Armor("김광민의 갑옷  ", 20, "스파르타의 전사중 가장 강한 전사의 갑옷입니다.   ", 10000);
+            Weapon weapon1 = new Weapon("낡은 검        ", 2, "쉽게 볼 수 있는 낡은 검 입니다.                  ", 600);
+            Weapon weapon2 = new Weapon("청동 도끼      ", 5, "어디선가 사용됐던거 같은 도끼입니다.             ", 1500);
+            Weapon weapon3 = new Weapon("스파르타의 창  ", 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.  ", 2700);
+            Weapon weapon4 = new Weapon("김광민 동상    ", 20, "가장 강한 전사의 형태를 한 동상입니다.           ", 10000);
+            shop.Add(armor1);
+            shop.Add(armor2);
+            shop.Add(armor3);
+            shop.Add(armor4);
+            shop.Add(weapon1);
+            shop.Add(weapon2);
+            shop.Add(weapon3);
+            shop.Add(weapon4);
+
+
             Player kim = new Player(1, "kim", "전사", 10, 5, 100, 1500);
 
-            Armor armor1 = new Armor("무쇠갑옷", 5, "무쇠로 만들어져 튼튼한 갑옷입니다.", 1800);
-            Weapon weapon1 = new Weapon("스파르타의 창", 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.", 2700);
-            Weapon weapon2 = new Weapon("낡은 검", 2, "쉽게 볼 수 있는 낡은 검 입니다.", 600);
-
-            kim.AddItem(armor1);
+            kim.AddItem(armor2);
+            kim.AddItem(weapon3);
             kim.AddItem(weapon1);
-            kim.AddItem(weapon2);
-            kim.OnOffTheItem(weapon1);
-            kim.OnOffTheItem(armor1);
+            kim.OnTheItem(weapon1);
+            kim.OnTheItem(armor2);
 
-            Shop shop = new Shop();
-            shop.Add(new Armor("수련자 갑옷", 5, "수련에 도움을 주는 갑옷입니다.", 1000));
-            shop.Add(new Armor("무쇠갑옷", 9, "무쇠로 만들어져 튼튼한 갑옷입니다. ", null));
-            shop.Add(new Armor("스파르타의 갑옷", 15, "스파르타의 전사들이 사용했다는 전설의 갑옷입니다.", 3500));
-            shop.Add(new Armor("김광민의 갑옷", 20, "스파르타의 전사중 가장 강한 전사의 갑옷입니다.", 10000));
-            shop.Add(new Weapon("낡은 검", 2, "쉽게 볼 수 있는 낡은 검 입니다.  ", null));
-            shop.Add(new Weapon("청동 도끼", 5, "어디선가 사용됐던거 같은 도끼입니다.  ", 1500));
-            shop.Add(new Weapon("스파르타의 창 ", 7, "스파르타의 전사들이 사용했다는 전설의 창입니다.  ", null));
-            shop.Add(new Weapon("김광민 방방이 ", 20, "스파르타의 전사중 가장 강한 전사의 형태를 한 몽둥이입니다.  ", 10000));
+
+
 
             Dungeon[] Dungeons = {new Dungeon(DunjeonType.Easy,5,1000 ),
                              new Dungeon(DunjeonType.Normal,11,1700 ),
@@ -37,6 +68,7 @@ namespace TextRPG
             int input;
             bool isneedErrorMessages = true;
             int DunjeonLevel = -1;
+
             while (true)
             {
                 try
@@ -92,7 +124,7 @@ namespace TextRPG
                             }
                             else if (input > 0 && input <= kim.GetItemLength())
                             {
-                                kim.OnOffTheItem(input);
+                                kim.OnTheItem(input);
                             }
                             else
                             {
@@ -155,14 +187,14 @@ namespace TextRPG
                             else if (input > 0 && input <= Dungeons.Length)
                             {
                                 DunjeonLevel = input;
-                                state = Stage.DungeonEnd;                                
+                                state = Stage.DungeonEnd;
                             }
                             else
                             {
                                 isneedErrorMessages = false;
                             }
                             break;
-                        case Stage.DungeonEnd:            
+                        case Stage.DungeonEnd:
                             Messages.Instance().DungeonEnd(Dungeons[DunjeonLevel], kim);
                             input = int.Parse(Console.ReadLine());
 
@@ -193,13 +225,14 @@ namespace TextRPG
                             }
                             break;
                         case Stage.GameOver:
-                            //게임 종료해도 플레이및 상인 터이터 저장
+                            WriteFile(kim);
                             return;
                         default: break;
                     }
                 }
                 catch (FormatException) { isneedErrorMessages = false; }
             }
+
         }
     }
 }

@@ -10,47 +10,37 @@ namespace TextRPG
 {
     internal class Player : IShowItem
     {
-        private int level;
-        public int Level { get { return level; } set { level = value; } }
-        private int exp;
-        public int Exp { get { return exp; } set { exp = value; } }
-        private string name;
-        public string Name { get { return name; } set { name = value; } }
 
-        private string myClass;
-        public string MyClass { get { return myClass; } set { myClass = value; } }
-
-        private float damage;
-        public float Damage { get { return damage; } set { damage = value; } }
-
-        private float defense;
-        public float Defense { get { return defense; } set { defense = value; } }
-
-        private int life;
-        public int Life { get { return life; } set { life = value; } }
-
-        private int gold;
-        public int Gold { get { return gold; } set { gold = value; } }
+        public int Level { get; set; }
+        public int Exp { get; set; }
+        public string Name { get; set; }
+        public string MyClass { get; set; }
+        public float Damage { get; set; }
+        public float Defense { get; set; }
+        public int Life { get; set; }
+        public int Gold { get; set; }
 
         private List<Item> items = new List<Item>();
-        public List<Item> Items { get { return items; } }
-        private Item myWeapon;
-        private Item myArmor;
+        public List<Item> Items { get { return items; }set { items = value; } }
 
-        private int addDamages;
-        private int addDefense;
+        public Item myWeapon;
+        public Item myArmor;
 
+        public int addDamages;
+        public int addDefense;
+
+        public Player() { }
         public Player(int level, string name, string myClass, int damage, int defense, int life, int gold)
 
         {
-            this.level = level;
-            this.name = name;
-            this.myClass = myClass;
-            this.damage = damage;
-            this.defense = defense;
-            this.life = life;
-            this.gold = gold;
-            exp = 0;
+            this.Level = level;
+            this.Name = name;
+            this.MyClass = myClass;
+            this.Damage = damage;
+            this.Defense = defense;
+            this.Life = life;
+            this.Gold = gold;
+            Exp = 0;
             addDamages = 0;
             addDefense = 0;
         }
@@ -69,12 +59,15 @@ namespace TextRPG
         public void ShowStaters()
         {
             Console.WriteLine($"""  
-                   lv. {level.ToString("00")}  
-                   {name} ( {myClass} )  
-                   공격력 : {damage} {(addDamages != 0 ? $"(+{addDamages})" : "")}
-                   방어력 : {defense} {(addDefense != 0 ? $"(+{addDefense})" : "")}
-                   체 력 : {life}  
-                   Gold : {gold} G               
+                   상태 보기
+                   캐릭터의 정보가 표시됩니다.
+
+                   lv. {Level.ToString("00")}  
+                   {Name}    : ( {MyClass} )  
+                   공격력 : {Damage} {(addDamages != 0 ? $"(+{addDamages})" : "")}
+                   방어력 : {Defense} {(addDefense != 0 ? $"(+{addDefense})" : "")}
+                   체 력  : {Life}  
+                   Gold   : {Gold} G               
 
                    """);
         }
@@ -101,8 +94,8 @@ namespace TextRPG
             Exp += num;
             if(Exp==Level)
             {
-                damage += 0.5f;
-                defense += 1.0f;
+                Damage += 0.5f;
+                Defense += 1.0f;
                 Level++;
                 Exp = 0;
             }
@@ -120,7 +113,8 @@ namespace TextRPG
             foreach (var item in items)
             {
                 if (num.HasValue) num++;
-                item.Show(num);
+                if(item is Weapon) (item).Show(num);
+                if (item is Armor) (item).Show(num);
                 Console.WriteLine();
             }
         }
@@ -134,11 +128,11 @@ namespace TextRPG
             Gold += items[num].Price.Value * 85 / 100;
             items.RemoveAt(num);
         }
-        public void OnOffTheItem(int num)
+        public void OnTheItem(int num)
         {
-            OnOffTheItem(items[num-1]);
+            OnTheItem(items[num-1]);
         }
-        public void OnOffTheItem(Item item)
+        public void OnTheItem(Item item)
         {
             if (!items.Contains(item)) return; 
 

@@ -37,6 +37,7 @@ namespace TextRPG
             else Console.Write(" - ");
 
             if (IsEquipped) Console.Write("[E]");
+            else Console.Write("[ ]");
         }
         public virtual void Equipped()
         {

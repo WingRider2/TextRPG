@@ -22,7 +22,7 @@ namespace TextRPG
         }
         public void show(int num)
         {
-            Console.WriteLine($"{num}. {type.ToString()} | 방어력 {recommendDefense} 이상 권장");
+            Console.WriteLine($"{num}. {type.ToString(),6} | 방어력 {recommendDefense,2} 이상 권장");
         }
 
         public bool ComeInPlayer(Player player)
