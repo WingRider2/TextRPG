@@ -49,15 +49,11 @@ namespace TextRPG
 
 
             Player kim = new Player(1, "kim", "전사", 10, 5, 100, 1500);
-
             kim.AddItem(armor2);
             kim.AddItem(weapon3);
             kim.AddItem(weapon1);
             kim.OnTheItem(weapon1);
             kim.OnTheItem(armor2);
-
-
-
 
             Dungeon[] Dungeons = {new Dungeon(DunjeonType.Easy,5,1000 ),
                              new Dungeon(DunjeonType.Normal,11,1700 ),
@@ -232,7 +228,6 @@ namespace TextRPG
                 }
                 catch (FormatException) { isneedErrorMessages = false; }
             }
-
         }
     }
 }
