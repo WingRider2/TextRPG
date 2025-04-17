@@ -44,7 +44,7 @@ namespace TextRPG
                     lose(player);
                     return false;
                 }
-            }          
+            }         
 
         }
         public bool isClear()

@@ -38,6 +38,8 @@ namespace TextRPG
 
             if (IsEquipped) Console.Write("[E]");
             else Console.Write("[ ]");
+            if(Type == itemType.Weapon) Console.Write($"{Name} | 공격력 +{point,3} | {ItemEquipment} |");
+            if (Type == itemType.Armor) Console.Write($"{Name} | 방어력 +{point,3} | {ItemEquipment} |");
         }
         public virtual void Equipped()
         {

@@ -18,7 +18,6 @@ namespace TextRPG
         public override void Show(int? num)
         {
             base.Show(num);
-            Console.Write($"{Name} | 방어력 +{point,3} | {ItemEquipment} |");
         }
 
     }

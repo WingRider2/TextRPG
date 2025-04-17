@@ -10,7 +10,6 @@ namespace TextRPG
 {
     internal class Player : IShowItem
     {
-
         public int Level { get; set; }
         public int Exp { get; set; }
         public string Name { get; set; }
@@ -113,8 +112,8 @@ namespace TextRPG
             foreach (var item in items)
             {
                 if (num.HasValue) num++;
-                if(item is Weapon) (item).Show(num);
-                if (item is Armor) (item).Show(num);
+                item.Show(num);
+                //if(item is Armor) item.Show(num);
                 Console.WriteLine();
             }
         }
