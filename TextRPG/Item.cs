@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace TextRPG
 {
+    [XmlInclude(typeof(Weapon))]
+    [XmlInclude(typeof(Armor))]
     internal class Item
     {
         protected string name;
@@ -37,7 +40,8 @@ namespace TextRPG
             else Console.Write(" - ");
 
             if (IsEquipped) Console.Write("[E]");
-            else Console.Write("[ ]");
+            else Console.Write("");
+
             if(Type == itemType.Weapon) Console.Write($"{Name} | 공격력 +{point,3} | {ItemEquipment} |");
             if (Type == itemType.Armor) Console.Write($"{Name} | 방어력 +{point,3} | {ItemEquipment} |");
         }

@@ -113,7 +113,6 @@ namespace TextRPG
             {
                 if (num.HasValue) num++;
                 item.Show(num);
-                //if(item is Armor) item.Show(num);
                 Console.WriteLine();
             }
         }

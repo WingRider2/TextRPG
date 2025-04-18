@@ -6,7 +6,7 @@ namespace TextRPG
 {
     internal class Program
     {
-        private static string xmlFileName = @"D:\SPClub\TextRPG\data.txt";
+        private static string xmlFileName = Path.GetFullPath(@"D:..\data.txt");
 
         public static void WriteFile(Player player)
         {
@@ -48,12 +48,15 @@ namespace TextRPG
             shop.Add(weapon4);
 
             Player kim = ReadFile();
-            //Player kim = new Player(1, "kim", "전사", 10, 5, 100, 1500);
-            //kim.AddItem(armor2);
-            //kim.AddItem(weapon3);
-            //kim.AddItem(weapon1);
-            //kim.OnTheItem(weapon1);
-            //kim.OnTheItem(armor2);
+            if (kim == null){
+                kim = new Player(1, "kim", "전사", 10, 5, 100, 1500);
+                kim.AddItem(armor2);
+                kim.AddItem(weapon3);
+                kim.AddItem(weapon1);
+                kim.OnTheItem(weapon1);
+                kim.OnTheItem(armor2);
+            }
+
 
             Dungeon[] Dungeons = {new Dungeon(DunjeonType.Easy,5,1000 ),
                              new Dungeon(DunjeonType.Normal,11,1700 ),
